@@ -8,6 +8,7 @@
         "name": { "S": "$context.arguments.name" },
         "where": { "S": "$context.arguments.where" },
         "when": { "S": "$context.arguments.when" },
-        "description": { "S": "$context.arguments.description" }
+        "description": { "S": "$context.arguments.description" },
+        "identityId": { "S": "$context.identity.cognitoIdentityId" }
     }
 }

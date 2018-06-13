@@ -8,6 +8,7 @@ commentId: String!
 content: String!
 #   The comment timestamp. This field is indexed to enable sorted pagination.
 createdAt: String!
+identityId: String!
 }
 
 type CommentConnection
@@ -23,6 +24,7 @@ name: String
 where: String
 when: String
 description: String
+identityId: String!
 #   Paginate through all comments belonging to an individual post.
 comments(limit: Int,nextToken: String ): CommentConnection
 }

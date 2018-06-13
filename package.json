@@ -6,9 +6,11 @@
     "amazon-cognito-identity-js": "^2.0.9",
     "aws-amplify": "^0.4.4",
     "aws-amplify-react-native": "^0.2.15",
+    "graphql-tag": "^2.9.2",
     "prop-types": "^15.6.1",
     "react": "16.4.0",
-    "react-native": "~0.55.4"
+    "react-native": "~0.55.4",
+    "react-navigation": "^2.3.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.3",

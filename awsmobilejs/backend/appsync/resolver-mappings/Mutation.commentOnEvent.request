@@ -7,6 +7,7 @@
     },
     "attributeValues": {
         "content": { "S": "$context.arguments.content" },
-        "createdAt": { "S": "$context.arguments.createdAt" }
+        "createdAt": { "S": "$context.arguments.createdAt" },
+        "identityId": {"S": "$context.identity.cognitoIdentityId"}
     }
 }
