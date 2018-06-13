@@ -11,6 +11,7 @@ export default gql`
       content: $content
       createdAt: $createdAt
     ) {
+      __typename
       identityId
       eventId
       commentId

@@ -3,6 +3,7 @@ import gql from 'graphql-tag'
 export default gql`
   query listEvents {
     items {
+      __typename
       id
       identityId
       name
@@ -11,6 +12,7 @@ export default gql`
       where
       comments {
         items {
+          __typename
           commentId
           identityId
           createdAt

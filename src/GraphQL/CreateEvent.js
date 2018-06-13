@@ -13,6 +13,7 @@ export default gql`
       when: $when
       where: $where
     ) {
+      __typename
       id
       identityId
       name
