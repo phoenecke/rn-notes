@@ -1,5 +1,5 @@
 import React from 'react'
-import Amplify from 'aws-amplify'
+import Amplify, { Auth } from 'aws-amplify'
 import { withAuthenticator } from 'aws-amplify-react-native'
 import { createStackNavigator } from 'react-navigation'
 import AWSAppSyncClient, { createAppSyncLink } from 'aws-appsync'
@@ -7,11 +7,19 @@ import { onError } from 'apollo-link-error'
 import { ApolloLink } from 'apollo-link'
 import { ApolloProvider } from 'react-apollo'
 import { Rehydrated } from 'aws-appsync-react'
+import { AUTH_TYPE } from 'aws-appsync/lib/link/auth-link'
 
 import HomeScreen from './ListEvents'
 import AddScreen from './AddEvent'
 import aws_exports from '../aws-exports'
 import appSyncConfig from '../AppSync'
+
+// REMOVE (HOPEFULLY) WHEN RN 0.56 is out.
+import { YellowBox } from 'react-native'
+YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated'])
+YellowBox.ignoreWarnings(['Module RCTImageLoader requires'])
+// REMOVE (HOPEFULLY) WHEN RN 0.56 is out.
+YellowBox.ignoreWarnings(['Remote debugger is in a background tab'])
 
 Amplify.configure(aws_exports)
 
@@ -40,8 +48,9 @@ const onErrorLink = onError(({ graphQLErrors, networkError }) => {
 
 const appSyncLink = createAppSyncLink({
   auth: {
-    apiKey: appSyncConfig.apiKey,
-    type: appSyncConfig.authenticationType,
+    type: AUTH_TYPE.AWS_IAM,
+    // IAM key/secret for logged in user.
+    credentials: () => Auth.currentCredentials(),
   },
   region: appSyncConfig.region,
   url: appSyncConfig.graphqlEndpoint,
