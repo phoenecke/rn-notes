@@ -20,6 +20,11 @@ export default gql`
       description
       when
       where
+      comments {
+        items {
+          commentId
+        }
+      }
     }
   }
 `

@@ -1,20 +1,34 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StyleSheet, View, Text, FlatList } from 'react-native'
+import { StyleSheet, View, Text, FlatList, Button } from 'react-native'
 import { compose, graphql } from 'react-apollo'
+import { Auth } from 'aws-amplify'
 
 import ListEvents from './GraphQL/ListEvents'
 
 class EventItem extends React.Component {
   render() {
-    const { name, where, when, description, identityId } = this.props.event
+    const { name, where, when, description, identityId, id } = this.props.event
     return (
-      <View>
-        <Text>{name}</Text>
-        <Text>{description}</Text>
-        <Text>{where}</Text>
-        <Text>{when}</Text>
-        <Text>{identityId}</Text>
+      <View style={styles.item}>
+        <Text>
+          Name: <Text>{name}</Text>
+        </Text>
+        <Text>
+          Description: <Text>{description}</Text>
+        </Text>
+        <Text>
+          Where: <Text>{where}</Text>
+        </Text>
+        <Text>
+          When: <Text>{when}</Text>
+        </Text>
+        <Text>
+          IdentityId: <Text>{identityId}</Text>
+        </Text>
+        <Text>
+          Id: <Text>{id}</Text>
+        </Text>
       </View>
     )
   }
@@ -26,15 +40,27 @@ EventItem.propTypes = {
     when: PropTypes.string.isRequired,
     where: PropTypes.string.isRequired,
     identityId: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
   }),
 }
 
 class ListScreen extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Events',
+      headerRight: <Button onPress={() => Auth.signOut()} title="Logout" />,
+      headerLeft: (
+        <Button onPress={() => navigation.navigate('Add')} title="Add" />
+      ),
+    }
+  }
+
   render() {
     const { events } = this.props
     return (
       <View style={styles.container}>
         <FlatList
+          style={styles.scroll}
           data={events}
           keyExtractor={item => item.id}
           renderItem={({ item }) => <EventItem event={item} />}
@@ -57,8 +83,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  },
+  item: {
+    margin: 8,
+    padding: 8,
+    borderBottomWidth: 1,
+    borderColor: 'lightgray',
+    flex: 1,
   },
   text: {
     color: 'black',
